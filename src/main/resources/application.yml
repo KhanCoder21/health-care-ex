@@ -1,0 +1,16 @@
+server:
+  port: 9090
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/healthcare_schema
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQLDialect

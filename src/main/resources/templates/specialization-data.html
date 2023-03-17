@@ -1,0 +1,51 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<!--Header started -->
+			<div class="card-header bg-primary text-center text-white">
+				<h3>Specialization data</h3>
+			</div>
+			<!--header ends -->
+			<!--body started -->
+			<div class="card-body">
+				<a th:href="@{/spec/excel}" class="btn btn-success">Excel <i
+					class="fa fa-file-excel-o" aria-hidden="true"></i>
+				</a>
+				<table class="table">
+					<tr class="table-hover bg-info text-white">
+						<th>ID</th>
+						<th>CODE</th>
+						<th>NAME</th>
+						<th>NOTE</th>
+						<th>OPERATION</th>
+					</tr>
+					<tr th:each="ob:${allSpecialization}">
+						<td th:text="${ob.id}"></td>
+						<td th:text="${ob.specCode}"></td>
+						<td th:text="${ob.specName}"></td>
+						<td th:text="${ob.specNote}"></td>
+						<td><a th:href="@{/spec/delete(id=${ob.id})}"
+							class="btn btn-danger">DELETE <i class="fa fa-trash-o"
+								aria-hidden="true"></i>
+						</a> | <a th:href="@{/spec/edit(id=${ob.id})}" class="btn btn-danger">EDIT
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+						</a></td>
+					</tr>
+				</table>
+			</div>
+			<!--body ends -->
+			<div class="card-footer" th:if="${message}!=null">
+				<span th:text="${message}">message</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
