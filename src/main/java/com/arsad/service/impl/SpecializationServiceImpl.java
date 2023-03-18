@@ -1,14 +1,15 @@
 package com.arsad.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.arsad.utils.CollectionUtils;
 import com.arsad.entity.Specialization;
 import com.arsad.exception.SpecializationNotFoundException;
 import com.arsad.repository.SpecializationRepository;
 import com.arsad.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -59,6 +60,13 @@ public class SpecializationServiceImpl implements SpecializationService {
     @Override
     public boolean isSpecCodeExistForEdit(String specCode, Long id) {
         return repository.getSpecCodeCountForEdit(specCode, id) > 0 ? true : false;
+    }
+
+    @Override
+    public Map<Long, String> getSpecIdAndName() {
+        List<Object[]> specIdAndNameList = repository.getSpecIdAndName();
+        Map<Long, String> specIdAndNameMap = CollectionUtils.convertListToMap(specIdAndNameList);
+        return specIdAndNameMap;
     }
 
 }

@@ -84,6 +84,21 @@
                         <span id="emailError"></span>
                     </div>
                 </div>
+                <!--row Specialization integration at ui -->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="specialization">Specialization</label>
+                    </div>
+                    <div class="col-4">
+                        <select th:field="*{specialization.id}" id="specialization" class="form-control">
+                            <option value="">--SELECT--</option>
+                            <option th:each="ob:${specializations}" th:value="${ob.key}" th:text="${ob.value}"></option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <span id="specializationError"></span>
+                    </div>
+                </div>
                 <!--row number 4 -->
                 <div class="row">
                     <div class="col-2">
@@ -131,6 +146,18 @@
                     </div>
                     <div class="col-6">
                         <span id="noteError"></span>
+                    </div>
+                </div>
+                <!--row number 5 -->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="imageLoc">Image</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="tel" th:field="*{imageLoc}" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="imageLocError"></span>
                     </div>
                 </div>
                 <!--all rows ends here-->

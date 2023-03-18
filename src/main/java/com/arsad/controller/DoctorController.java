@@ -2,8 +2,8 @@ package com.arsad.controller;
 
 import com.arsad.entity.Doctor;
 import com.arsad.exception.DoctorNotFoundException;
-import com.arsad.exception.SpecializationNotFoundException;
 import com.arsad.service.DoctorService;
+import com.arsad.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 /* Created by Arsad on 2023-03-18 12:07 */
 @Controller
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
-    private DoctorService service;
+    private DoctorService doctorService;
+
+    @Autowired
+    private SpecializationService specializationService;
 
     /**
      * Method used display the doctor register page
@@ -25,7 +29,9 @@ public class DoctorController {
      * @return doctor-register.html page
      */
     @GetMapping("/register")
-    public String displayRegister() {
+    public String displayRegister(Model model, @RequestParam(value = "message", required = false) String message) {
+        model.addAttribute("message", message);
+        createSpecializationDynamicForUI(model);
         return "doctor-register";
     }
 
@@ -40,7 +46,7 @@ public class DoctorController {
     public String saveDoctorForm(@ModelAttribute Doctor doctor, Model model) {
         String message = null;
         try {
-            Long docId = service.saveDoctor(doctor);
+            Long docId = doctorService.saveDoctor(doctor);
             message = "Record " + docId + " is created successfully";
             model.addAttribute("message", message);
         } catch (Exception e) {
@@ -60,7 +66,7 @@ public class DoctorController {
      */
     @GetMapping("/all")
     private String displayAllDoctors(Model model, @RequestParam(value = "message", required = false) String message) {
-        List<Doctor> allDoctors = service.getAllDoctor();
+        List<Doctor> allDoctors = doctorService.getAllDoctor();
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("message", message);
         return "doctor-data";
@@ -75,7 +81,7 @@ public class DoctorController {
     @GetMapping("/delete")
     public String deleteData(@RequestParam Long id, RedirectAttributes attributes) {
         try {
-            service.removeDoctorById(id);
+            doctorService.removeDoctorById(id);
             attributes.addAttribute("message", "Record " + id + " is removed successfully");
         } catch (DoctorNotFoundException e) {
             e.printStackTrace();
@@ -94,8 +100,9 @@ public class DoctorController {
     public String showEditPage(@RequestParam Long id, Model model, RedirectAttributes attributes) {
         String page = null;
         try {
-            Doctor doctor = service.getDoctorById(id);
+            Doctor doctor = doctorService.getDoctorById(id);
             model.addAttribute("doctor", doctor);
+            createSpecializationDynamicForUI(model);
             page = "doctor-edit";
         } catch (DoctorNotFoundException e) {
             e.printStackTrace();
@@ -108,14 +115,20 @@ public class DoctorController {
     /**
      * 6. update record by id
      *
-     * @param id id
+     * @param doctor the doctor
      * @return redirect to all
      */
     @PostMapping("/update")
     public String updateData(@ModelAttribute Doctor doctor, RedirectAttributes attributes) {
-        service.updateDoctor(doctor);
+        doctorService.updateDoctor(doctor);
         attributes.addAttribute("message", "Record " + doctor.getId() + " is updated successfully");
         return "redirect:all";
+    }
+
+    private void createSpecializationDynamicForUI(Model model) {
+        Map<Long, String> specializations = specializationService.getSpecIdAndName();
+        System.out.println("specializations;;;;;---" +specializations);
+        model.addAttribute("specializations", specializations);
     }
 
 

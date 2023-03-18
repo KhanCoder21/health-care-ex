@@ -26,23 +26,27 @@
             <table class="table">
                 <tr class="table-hover bg-info text-white">
                     <!-- <th>ID</th>-->
+                    <th></th>
                     <th>NAME</th>
                     <th>EMAIL</th>
+                    <th>SPECIALIZATION</th>
                     <th>MOBILE</th>
                     <th>NOTE</th>
                     <th>ADDRESS</th>
                     <th>OPERATION</th>
                 </tr>
                 <tr th:each="ob:${allDoctors}">
+                    <td><img th:src="${ob.imageLoc}" alt="doc-no-img" width="50" height="60"></td>
                     <td>[[${ob.firstName + ' '+ ob.lastName}]]</td>
                     <td th:text="${ob.email}"></td>
+                    <td th:text="${ob.specialization.specName}"></td>
                     <td th:text="${ob.mobile}"></td>
                     <td th:text="${ob.note}"></td>
                     <td th:text="${ob.address}"></td>
                     <td><a th:href="@{/doctor/delete(id=${ob.id})}"
-                           class="btn btn-danger">DELETE <i class="fa fa-trash-o"
-                                                            aria-hidden="true"></i>
-                    </a> | <a th:href="@{/doctor/edit(id=${ob.id})}" class="btn btn-danger">EDIT
+                           class="btn btn-danger"> DELETE <i class="fa fa-trash-o"
+                                                             aria-hidden="true"></i>
+                    </a> | <a th:href="@{/doctor/edit(id=${ob.id})}" class="btn btn-warning"> EDIT
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a></td>
                 </tr>

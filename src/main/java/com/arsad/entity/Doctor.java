@@ -31,4 +31,9 @@ public class Doctor {
     private String gender;
     @Column(name = "note")
     private String note;
+    @Column(name = "doc_img")
+    private String imageLoc; // https://i.ibb.co/fYM4SNj/doc-img-1.jpg
+    @ManyToOne
+    @JoinColumn(name = "spec_id_fk")
+    private Specialization specialization;
 }
