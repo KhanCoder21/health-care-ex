@@ -105,9 +105,9 @@ public class SpecializationController {
     }
 
     /**
-     * 6. delete record by id
+     * 6. update record by id
      *
-     * @param id
+     * @param id id
      * @return redirect to all
      */
     @PostMapping("/update")
