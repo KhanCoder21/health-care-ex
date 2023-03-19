@@ -125,9 +125,28 @@ public class DoctorController {
         return "redirect:all";
     }
 
+
+    /**
+     * 7. validate spec code
+     *
+     * @param code code
+     * @return response as message
+     */
+    @GetMapping("/checkEmail")
+    @ResponseBody
+    public String validateEmailId(@RequestParam String email, @RequestParam Long id) {
+        String message = "";
+        if (id == 0 && doctorService.isEmailIdExist(email)) {
+            message = email + ", already exist";
+        } else if (id != 0 && doctorService.isEmailIdExistForEdit(email, id)) {
+            message = email + ", already exist";
+        }
+        return message;
+    }
+
+
     private void createSpecializationDynamicForUI(Model model) {
         Map<Long, String> specializations = specializationService.getSpecIdAndName();
-        System.out.println("specializations;;;;;---" +specializations);
         model.addAttribute("specializations", specializations);
     }
 

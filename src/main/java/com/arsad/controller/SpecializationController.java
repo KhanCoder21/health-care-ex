@@ -59,7 +59,6 @@ public class SpecializationController {
     public String viewAllSpecialization(Model model,
                                         @RequestParam(value = "message", required = false) String message) {
         List<Specialization> allSpecialization = service.getAllSpecialization();
-        System.out.println("Printing allSpecialization: " + allSpecialization);
         model.addAttribute("allSpecialization", allSpecialization);
         model.addAttribute("message", message);
         return "specialization-data";

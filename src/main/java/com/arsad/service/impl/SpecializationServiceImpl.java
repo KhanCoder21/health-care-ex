@@ -20,13 +20,11 @@ public class SpecializationServiceImpl implements SpecializationService {
 
     @Override
     public Long saveSpecialization(Specialization specialization) {
-        System.out.println("save method called");
         return repository.save(specialization).getId();
     }
 
     @Override
     public List<Specialization> getAllSpecialization() {
-        System.out.println("Find all method called");
         return repository.findAll();
     }
 
@@ -48,7 +46,6 @@ public class SpecializationServiceImpl implements SpecializationService {
 
     @Override
     public void updateSpecialization(Specialization specialization) {
-        System.out.println("update method called");
         repository.save(specialization);
     }
 

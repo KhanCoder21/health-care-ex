@@ -15,4 +15,7 @@ public interface DoctorService {
     Doctor getDoctorById(Long id);
 
     void updateDoctor(Doctor doctor);
+
+    boolean isEmailIdExist(String email);
+    boolean isEmailIdExistForEdit(String email, Long id);
 }

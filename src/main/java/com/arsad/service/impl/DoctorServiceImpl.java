@@ -43,4 +43,14 @@ public class DoctorServiceImpl implements DoctorService {
             throw new DoctorNotFoundException(doctor.getId() + ", not exists");
         }
     }
+
+    @Override
+    public boolean isEmailIdExist(String email) {
+        return repository.getEmailIdCount(email) > 0;
+    }
+
+    @Override
+    public boolean isEmailIdExistForEdit(String email, Long id) {
+        return repository.getEmailIdCountForEdit(email, id) > 0;
+    }
 }
