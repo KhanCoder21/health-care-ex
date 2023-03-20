@@ -4,6 +4,7 @@ import com.arsad.entity.Doctor;
 import com.arsad.exception.DoctorNotFoundException;
 import com.arsad.service.DoctorService;
 import com.arsad.service.SpecializationService;
+import com.arsad.utils.EmailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,9 @@ import java.util.Map;
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
+    EmailUtils emailUtils;
+    @Autowired
     private DoctorService doctorService;
-
     @Autowired
     private SpecializationService specializationService;
 
@@ -49,6 +51,11 @@ public class DoctorController {
             Long docId = doctorService.saveDoctor(doctor);
             message = "Record " + docId + " is created successfully";
             model.addAttribute("message", message);
+            if (null != docId) {
+                System.out.println("##### Mail sent successfully");
+                /* String finalMessage = message;
+                 new Thread(() -> emailUtils.sendMail("abc@gmail.com", doctor.getEmail(), "Registration success", finalMessage, null)).start();*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
             message = "Sorry, record creation is failed";
