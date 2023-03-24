@@ -62,7 +62,7 @@ public class SpecializationServiceImpl implements SpecializationService {
     @Override
     public Map<Long, String> getSpecIdAndName() {
         List<Object[]> specIdAndNameList = repository.getSpecIdAndName();
-        Map<Long, String> specIdAndNameMap = CollectionUtils.convertListToMap(specIdAndNameList);
+        Map<Long, String> specIdAndNameMap = CollectionUtils.convertListToMapTwoIndex(specIdAndNameList);
         return specIdAndNameMap;
     }
 

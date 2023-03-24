@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
 
 /* Created by Arsad on 2023-03-18 12:07 */
 @Controller
@@ -33,7 +32,7 @@ public class PatientController {
     @GetMapping("/register")
     public String displayRegister(Model model, @RequestParam(value = "message", required = false) String message) {
         model.addAttribute("message", message);
-        createSpecializationDynamicForUI(model);
+        model.addAttribute("Patient", new Patient());
         return "patient-register";
     }
 
@@ -46,7 +45,7 @@ public class PatientController {
      */
     @PostMapping("/save")
     public String savePatientForm(@ModelAttribute Patient patient, Model model) {
-        String message = null;
+        String message;
         try {
             Long docId = patientService.savePatient(patient);
             message = "Record " + docId + " is created successfully";
@@ -69,7 +68,7 @@ public class PatientController {
      *
      * @param model   model object usd send data back to ui
      * @param message success or failure message in case of update and delete operation
-     * @return
+     * @return all patient page
      */
     @GetMapping("/all")
     private String displayAllPatients(Model model, @RequestParam(value = "message", required = false) String message) {
@@ -105,7 +104,7 @@ public class PatientController {
      */
     @GetMapping("/edit")
     public String showEditPage(@RequestParam Long id, Model model, RedirectAttributes attributes) {
-        String page = null;
+        String page;
         try {
             Patient patient = patientService.getPatientById(id);
             model.addAttribute("patient", patient);
@@ -133,9 +132,9 @@ public class PatientController {
 
 
     /**
-     * 7. validate spec code
+     * 7. validate email id
      *
-     * @param code code
+     * @param email email
      * @return response as message
      */
     @GetMapping("/checkEmail")
@@ -149,12 +148,5 @@ public class PatientController {
         }
         return message;
     }
-
-
-    private void createSpecializationDynamicForUI(Model model) {
-        Map<Long, String> specializations = specializationService.getSpecIdAndName();
-        model.addAttribute("specializations", specializations);
-    }
-
 
 }

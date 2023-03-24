@@ -4,10 +4,12 @@ import com.arsad.entity.Doctor;
 import com.arsad.exception.DoctorNotFoundException;
 import com.arsad.repository.DoctorRepository;
 import com.arsad.service.DoctorService;
+import com.arsad.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /* Created by Arsad on 2023-03-18 02:38 */
 @Service
@@ -52,5 +54,12 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public boolean isEmailIdExistForEdit(String email, Long id) {
         return repository.getEmailIdCountForEdit(email, id) > 0;
+    }
+
+    @Override
+    public Map<Long, String> getDocIdAndName() {
+        List<Object[]> docIdAndNameList = repository.getDocIdAndName();
+        Map<Long, String> docIdAndNameMap = CollectionUtils.convertListToMapThirdIndex(docIdAndNameList);
+        return docIdAndNameMap;
     }
 }
