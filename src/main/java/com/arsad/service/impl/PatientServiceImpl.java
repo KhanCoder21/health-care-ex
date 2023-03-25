@@ -65,12 +65,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public boolean isEmailIdExist(String email) {
         return repository.getEmailIdCount(email) > 0;
-        return true;
     }
 
     @Override
     public boolean isEmailIdExistForEdit(String email, Long id) {
         return repository.getEmailIdCountForEdit(email, id) > 0;
-        return true;
     }
 }

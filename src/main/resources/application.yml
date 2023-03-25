@@ -1,5 +1,11 @@
 server:
   port: 9090
+
+master:
+  user:
+    name: IRIS
+    email: abcIris@gmail.com
+
 spring:
   application:
     name: Health-Care
