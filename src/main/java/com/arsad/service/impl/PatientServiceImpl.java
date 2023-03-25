@@ -1,9 +1,13 @@
 package com.arsad.service.impl;
 
 import com.arsad.entity.Patient;
+import com.arsad.entity.User;
+import com.arsad.enums.UserRole;
 import com.arsad.exception.PatientNotFoundException;
 import com.arsad.repository.PatientRepository;
 import com.arsad.service.PatientService;
+import com.arsad.service.UserService;
+import com.arsad.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +18,24 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository repository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserUtils userUtils;
 
     @Override
     public Long savePatient(Patient patient) {
-        return repository.save(patient).getId();
+        Long id = repository.save(patient).getId();
+        if (null != id) {
+            User user = new User();
+            user.setDisplayName(patient.getFirstName() + " " + patient.getLastName());
+            user.setUserName(patient.getEmail());
+            user.setPassword(userUtils.generatePassword());
+            user.setUserRole(UserRole.PATIENT.name());
+            userService.saveUser(user);
+            /* TODO : Email part is pending */
+        }
+        return id;
     }
 
     @Override
@@ -46,13 +64,13 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public boolean isEmailIdExist(String email) {
-       // return repository.getEmailIdCount(email) > 0;
+        return repository.getEmailIdCount(email) > 0;
         return true;
     }
 
     @Override
     public boolean isEmailIdExistForEdit(String email, Long id) {
-      //  return repository.getEmailIdCountForEdit(email, id) > 0;
+        return repository.getEmailIdCountForEdit(email, id) > 0;
         return true;
     }
 }

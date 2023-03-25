@@ -1,10 +1,14 @@
 package com.arsad.service.impl;
 
 import com.arsad.entity.Doctor;
+import com.arsad.entity.User;
+import com.arsad.enums.UserRole;
 import com.arsad.exception.DoctorNotFoundException;
 import com.arsad.repository.DoctorRepository;
 import com.arsad.service.DoctorService;
+import com.arsad.service.UserService;
 import com.arsad.utils.CollectionUtils;
+import com.arsad.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +20,24 @@ import java.util.Map;
 public class DoctorServiceImpl implements DoctorService {
     @Autowired
     private DoctorRepository repository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserUtils userUtils;
 
     @Override
     public Long saveDoctor(Doctor doctor) {
-        return repository.save(doctor).getId();
+        Long id = repository.save(doctor).getId();
+        if (null != id) {
+            User user = new User();
+            user.setDisplayName(doctor.getFirstName() + " " + doctor.getLastName());
+            user.setUserName(doctor.getEmail());
+            user.setPassword(userUtils.generatePassword());
+            user.setUserRole(UserRole.DOCTOR.name());
+            userService.saveUser(user);
+            /* TODO : Email part is pending */
+        }
+        return id;
     }
 
     @Override

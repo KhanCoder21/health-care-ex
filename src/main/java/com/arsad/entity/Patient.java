@@ -32,6 +32,9 @@ public class Patient {
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "email_id")
+    private String email;
+
     @Column(name = "mobile_no")
     private String mobile;
 

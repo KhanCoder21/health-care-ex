@@ -26,7 +26,8 @@
             <table class="table">
                 <tr class="table-hover bg-info text-white">
                     <th>NAME</th>
-                    <th>Gender</th>
+                    <th>GENDER</th>
+                    <th>EMAIL</th>
                     <th>MOBILE</th>
                     <th>DOB</th>
                     <th>OPERATION</th>
@@ -34,6 +35,7 @@
                 <tr th:each="ob:${allPatients}">
                     <td>[[${ob.firstName + ' '+ ob.lastName}]]</td>
                     <td th:text="${ob.gender}"></td>
+                    <td th:text="${ob.email}"></td>
                     <td th:text="${ob.mobile}"></td>
                     <td th:text="${ob.dateOfBirth}"></td>
                     <td>[[${ob.pastMedicalHistory +"-"+ ob.ifOtherHistory}]]</td>
