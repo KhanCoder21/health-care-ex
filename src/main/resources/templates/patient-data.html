@@ -1,16 +1,7 @@
 <html xmlns:th="https://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Patient Data</title>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
-    <link
-            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            rel="stylesheet"/>
-</head>
+<div th:replace="~{fragments/common-ui :: header}"></div>
 <body>
+<div th:replace="~{fragments/common-ui :: menu}"></div>
 <div class="container">
     <div class="card">
         <!--Header started -->
@@ -40,10 +31,9 @@
                     <td th:text="${ob.dateOfBirth}"></td>
                     <td>[[${ob.pastMedicalHistory +"-"+ ob.ifOtherHistory}]]</td>
                     <td><a th:href="@{/patient/delete(id=${ob.id})}"
-                           class="btn btn-danger"> DELETE <i class="fa fa-trash-o"
-                                                             aria-hidden="true"></i>
-                    </a> | <a th:href="@{/patient/edit(id=${ob.id})}" class="btn btn-warning"> EDIT
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                           class="btn btn-danger"> <i class="fa-sharp fa-regular fa-trash-can fa-beat-fade"></i>
+                    </a> | <a th:href="@{/patient/edit(id=${ob.id})}" class="btn btn-warning"> <i
+                            class="fa-sharp fa-solid fa-user-pen fa-beat"></i>
                     </a></td>
                 </tr>
             </table>
