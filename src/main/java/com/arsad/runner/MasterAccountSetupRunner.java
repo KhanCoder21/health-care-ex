@@ -29,13 +29,15 @@ public class MasterAccountSetupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (!userService.findUserByName(userName).isPresent()) {
+            String generatePwd = userUtils.generatePassword();
             User user = new User();
             user.setDisplayName(displayName);
             user.setUserName(userName);
-            user.setPassword(userUtils.generatePassword());
+            user.setPassword(generatePwd);
             user.setUserRole(UserRole.ADMIN.name());
             userService.saveUser(user);
-            /* TODO : Email part is pending */
+            /* TODO : Email part is pending b6edd3f9  c7f28606*/
+            System.out.println("#### Admin mail with password :" + generatePwd);
         }
 
     }

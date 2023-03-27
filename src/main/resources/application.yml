@@ -4,7 +4,7 @@ server:
 master:
   user:
     name: IRIS
-    email: abcIris@gmail.com
+    email: abIris@gmail.com
 
 spring:
   application:

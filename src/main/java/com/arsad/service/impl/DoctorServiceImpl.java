@@ -30,12 +30,14 @@ public class DoctorServiceImpl implements DoctorService {
         Long id = repository.save(doctor).getId();
         if (null != id) {
             User user = new User();
+            String generatePwd = userUtils.generatePassword();
             user.setDisplayName(doctor.getFirstName() + " " + doctor.getLastName());
             user.setUserName(doctor.getEmail());
-            user.setPassword(userUtils.generatePassword());
+            user.setPassword(generatePwd);
             user.setUserRole(UserRole.DOCTOR.name());
             userService.saveUser(user);
             /* TODO : Email part is pending */
+            System.out.println("#### Doctor mail with password :" +  generatePwd);
         }
         return id;
     }

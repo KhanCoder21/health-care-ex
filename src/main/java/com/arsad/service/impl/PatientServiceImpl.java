@@ -28,12 +28,14 @@ public class PatientServiceImpl implements PatientService {
         Long id = repository.save(patient).getId();
         if (null != id) {
             User user = new User();
+            String generatePwd = userUtils.generatePassword();
             user.setDisplayName(patient.getFirstName() + " " + patient.getLastName());
             user.setUserName(patient.getEmail());
-            user.setPassword(userUtils.generatePassword());
+            user.setPassword(generatePwd);
             user.setUserRole(UserRole.PATIENT.name());
             userService.saveUser(user);
             /* TODO : Email part is pending */
+            System.out.println("#### Patient mail with password :" +  generatePwd);
         }
         return id;
     }
