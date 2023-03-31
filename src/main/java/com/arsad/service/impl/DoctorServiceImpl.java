@@ -37,7 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
             user.setUserRole(UserRole.DOCTOR.name());
             userService.saveUser(user);
             /* TODO : Email part is pending */
-            System.out.println("#### Doctor mail with password :" +  generatePwd);
+            System.out.println("#### Doctor mail with password :" + generatePwd);
         }
         return id;
     }
@@ -81,5 +81,15 @@ public class DoctorServiceImpl implements DoctorService {
         List<Object[]> docIdAndNameList = repository.getDocIdAndName();
         Map<Long, String> docIdAndNameMap = CollectionUtils.convertListToMapThirdIndex(docIdAndNameList);
         return docIdAndNameMap;
+    }
+
+    /**
+     *
+     * @param specId spec id
+     * @return will check
+     */
+    @Override
+    public List<Doctor> findDoctorBySpecId(Long specId) {
+        return repository.findDoctorBySpecName(specId);
     }
 }

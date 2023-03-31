@@ -1,9 +1,11 @@
 package com.arsad.controller;
 
 import com.arsad.entity.Appointment;
+import com.arsad.entity.Doctor;
 import com.arsad.exception.AppointmentNotFoundException;
 import com.arsad.service.AppointmentService;
 import com.arsad.service.DoctorService;
+import com.arsad.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class AppointmentController {
     private AppointmentService appointmentService;
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    private SpecializationService specService;
 
 
     /**
@@ -156,5 +160,35 @@ public class AppointmentController {
         Map<Long, String> doctors = doctorService.getDocIdAndName();
         model.addAttribute("doctors", doctors);
     }
+
+    /**
+     * Handler method to view/search appointment page
+     *
+     * @param model   model object usd send data back to ui
+     * @param message success or failure message in case of update and delete operation
+     * @return
+     */
+    @GetMapping("/view")
+    private String viewSlots(Model model, @RequestParam(required = false, defaultValue = "0") Long specId) {
+        List<Doctor> doctorList;
+        try {
+            /*Fetch Data for spec Drop down*/
+            Map<Long, String> specIdAndNameMap = specService.getSpecIdAndName();
+            model.addAttribute("specializations", specIdAndNameMap);
+            if (specId <= 0) {
+                doctorList = doctorService.getAllDoctor();
+            } else {
+                doctorList = doctorService.findDoctorBySpecId(specId);
+            }
+            model.addAttribute("docList", doctorList);
+            model.addAttribute("message", doctorList.size() + " result found for this search");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Sorry, due to technical issue failed fetch all details");
+        }
+        return "appointment-search";
+    }
+
 
 }

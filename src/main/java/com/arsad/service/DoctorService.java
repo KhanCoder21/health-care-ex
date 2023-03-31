@@ -22,4 +22,6 @@ public interface DoctorService {
     boolean isEmailIdExistForEdit(String email, Long id);
 
     Map<Long, String> getDocIdAndName();
+
+    List<Doctor> findDoctorBySpecId(Long specId);
 }
