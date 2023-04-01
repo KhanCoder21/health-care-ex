@@ -24,7 +24,7 @@ public class Appointment {
     @JoinColumn(name = "app_doc_id_fk")
     private Doctor doctor;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "app_date")
     private Date date;

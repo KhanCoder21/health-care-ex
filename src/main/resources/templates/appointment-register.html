@@ -34,10 +34,10 @@
                     </div>
                     <div class="col-4">
                         <input
-                                type="date"
+                                type="text"
                                 name="date"
                                 id="date"
-                                class="form-control"
+                                class="form-control datepicker" autocomplete="off" readonly
                         />
                     </div>
                     <div class="col-6">
@@ -100,6 +100,11 @@
         <!--footer ends -->
     </div>
 </div>
-<script th:src="@{/health-care-js/appointment_validate.js}"></script>
+<script>
+    $('.datepicker').datepicker({
+    startDate : new Date()
+    })
+
+</script>
 </body>
 </html>

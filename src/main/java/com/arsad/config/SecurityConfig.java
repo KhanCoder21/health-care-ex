@@ -34,7 +34,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/patient/register", "/patient/save").permitAll()
                 .requestMatchers("patient/all").hasAuthority(UserRole.ADMIN.name())
-                .requestMatchers("doctor/**").hasAuthority(UserRole.ADMIN.name())
+                .requestMatchers("/spec/**").hasAuthority(UserRole.ADMIN.name())
+                .requestMatchers("/doctor/**").hasAuthority(UserRole.ADMIN.name())
+                .requestMatchers("/appointment/**").hasAuthority(UserRole.ADMIN.name())
+                .requestMatchers("/appointment/view","/appointment/viewSlots").hasAuthority(UserRole.PATIENT.name())
 
                 .anyRequest().authenticated().and().formLogin()
                 .defaultSuccessUrl("/spec/all", true)
