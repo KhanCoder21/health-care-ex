@@ -1,0 +1,61 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<div th:replace="~{fragments/common-ui :: header}"></div>
+
+<body>
+<div th:replace="~{fragments/common-ui :: menu}"></div>
+<div class="container">
+    <div class="card">
+        <!--Header started -->
+        <div class="card-header bg-primary text-center text-white">
+            <h3> Please login here </h3>
+        </div>
+        <!--body started -->
+        <div class="card-body">
+            <form id="docForm" method="post" th:action="@{/login}">
+                <!--row number 1 -->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="col-4">
+                        <input autofocus
+                               class="form-control"
+                               id="username"
+                               name="username" placeholder="Enter username here" required
+                               type="text"/>
+                    </div>
+                    <div class="col-6">
+                        <span id="usernameError"></span>
+                    </div>
+                </div>
+
+                <!--row number 2 -->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="col-4">
+                        <input
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Enter password here" required type="password"/>
+                    </div>
+                    <div class="col-6">
+                        <span id="passwordError"></span>
+                    </div>
+                </div>
+                <!--all rows ends here-->
+                <button class="btn btn-success" type="submit">
+                    Login <i class="fa-sharp fa-solid fa-square-plus fa-beat fa-lg"></i>
+                </button>
+            </form>
+        </div>
+        <!--footer start -->
+        <div class="card-footer bg-white text-info" th:if="${param.error}">Invalid User Details</div>
+        <div class="card-footer bg-white text-info" th:if="${param.logout}">Logout Success</div>
+        <!--footer ends -->
+    </div>
+</div>
+</body>
+</html>

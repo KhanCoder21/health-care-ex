@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by Arsad on 2023-03-26 18:40
@@ -30,18 +31,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http.authorizeHttpRequests()
                 .requestMatchers("/patient/register", "/patient/save").permitAll()
                 .requestMatchers("patient/all").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/spec/**").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/doctor/**").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/appointment/**").hasAuthority(UserRole.ADMIN.name())
-                .requestMatchers("/appointment/view","/appointment/viewSlots").hasAuthority(UserRole.PATIENT.name())
+                .requestMatchers("/appointment/view", "/appointment/viewSlots").hasAuthority(UserRole.PATIENT.name())
+                .requestMatchers("user/login", "/login").permitAll()
 
-                .anyRequest().authenticated().and().formLogin()
-                .defaultSuccessUrl("/spec/all", true)
-                .and().logout();
+                .anyRequest().authenticated().and().formLogin().loginPage("/user/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/user/setup", true)
+                .failureUrl("/user/login?error=true")
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/user/login?logout=true");
 
         return http.build();
 
