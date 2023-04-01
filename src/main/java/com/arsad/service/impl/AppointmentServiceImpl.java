@@ -65,4 +65,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     public boolean isEmailIdExistForEdit(String email, Long id) {
         return false;
     }
+
+    /**
+     * @param docId
+     * @return
+     */
+    @Override
+    public List<Object[]> fetchAppointmentsByDoctor(Long docId) {
+        return repository.getAppointmentsByDoctor(docId);
+    }
 }

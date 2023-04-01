@@ -6,7 +6,7 @@
     <div class="card">
         <!--Header started -->
         <div class="card-header bg-primary text-center text-white">
-            <h3>Doctor data</h3>
+            <h3>Doctor data for appointment search</h3>
         </div>
         <!--header ends -->
         <!--body started -->
@@ -45,7 +45,7 @@
                     <td th:text="${ob.specialization.specName}"></td>
                     <td th:text="${ob.mobile}"></td>
                     <td th:text="${ob.note}"></td>
-                    <td><a th:href="@{/doctor/bookSlot(id=${ob.id})}" class="btn btn-info"> find Slots </a></td>
+                    <td><a th:href="@{/appointment/viewSlots(docId=${ob.id})}" class="btn btn-info"> find Slots </a></td>
                 </tr>
             </table>
         </div>

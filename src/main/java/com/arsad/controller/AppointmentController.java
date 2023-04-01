@@ -190,5 +190,26 @@ public class AppointmentController {
         return "appointment-search";
     }
 
+    /**
+     * Handler method to view/search appointment page
+     *
+     * @param model   model object usd send data back to ui
+     * @param message success or failure message in case of update and delete operation
+     * @return
+     */
+    @GetMapping("/viewSlots")
+    private String showSlots(Model model, @RequestParam Long docId) {
+        try {
+            /*Fetch appointments based on doctor id*/
+            Doctor doctor = doctorService.getDoctorById(docId);
+            List<Object[]> aptmList = appointmentService.fetchAppointmentsByDoctor(docId);
+            model.addAttribute("aptmList", aptmList);
+            model.addAttribute("message", aptmList.size() + " appointments found for the doctor " + doctor.getFirstName() + " " + doctor.getLastName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Sorry, due to technical issue failed fetch requested details");
+        }
+        return "appointment-slots";
+    }
 
 }
