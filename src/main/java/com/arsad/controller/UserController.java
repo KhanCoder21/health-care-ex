@@ -5,8 +5,8 @@ import com.arsad.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -21,6 +21,19 @@ public class UserController {
     @GetMapping("/login")
     public String showLogin() {
         return "user-login";
+    }
+
+    @GetMapping("/showPwdUpdate")
+    public String showPasswordUpdate() {
+        return "user-password-update";
+    }
+
+    @PostMapping("/pwdUpdate")
+    public String updateUserPassword(@RequestParam String password, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("currentUserSession");
+        userService.updateUserPassword(password, user.getId());
+        model.addAttribute("message", "Password updated successfully");
+        return "user-password-update";
     }
 
     @GetMapping("/setup")
