@@ -25,8 +25,8 @@
                     <td th:text="${ob[0]}"></td>
                     <td th:text="${ob[1]}"></td>
                     <td th:text="${ob[2]}"></td>
-                    <td><a href="#"
-                           class="btn btn-info"> Request to Book a slot </a></td>
+                    <td><a class="btn btn-info"
+                           th:href="@{/slots/book(appointmentId=${ob[3]})}"> Request to Book a slot </a></td>
                 </tr>
             </table>
         </div>

@@ -35,7 +35,7 @@ public class PatientServiceImpl implements PatientService {
             user.setUserRole(UserRole.PATIENT.name());
             userService.saveUser(user);
             /* TODO : Email part is pending */
-            System.out.println("#### Patient mail with password :" +  generatePwd);
+            System.out.println("#### Patient mail with password :" + generatePwd);
         }
         return id;
     }
@@ -43,6 +43,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> getAllPatient() {
         return repository.findAll();
+    }
+
+    @Override
+    public Patient getPatientByEmail(String email) {
+        return repository.findByEmail(email).get();
     }
 
     @Override

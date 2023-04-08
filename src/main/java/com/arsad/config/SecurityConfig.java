@@ -37,8 +37,9 @@ public class SecurityConfig {
                 .requestMatchers("patient/all").hasAuthority(UserRole.PATIENT.name())
                 .requestMatchers("/spec/**").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/doctor/**").hasAuthority(UserRole.ADMIN.name())
-                .requestMatchers("/appointment/register","/appointment/save","/appointment/all").hasAuthority(UserRole.ADMIN.name())
+                .requestMatchers("/appointment/register", "/appointment/save", "/appointment/all").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/appointment/view", "/appointment/viewSlots").hasAuthority(UserRole.PATIENT.name())
+                .requestMatchers("/slots/book").hasAuthority(UserRole.PATIENT.name())
                 .requestMatchers("user/login", "/login").permitAll()
 
                 .anyRequest().authenticated()
