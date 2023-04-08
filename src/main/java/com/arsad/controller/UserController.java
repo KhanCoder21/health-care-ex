@@ -23,6 +23,11 @@ public class UserController {
         return "user-login";
     }
 
+    @GetMapping("/myProfile")
+    public String showProfile() {
+        return "user-profile";
+    }
+
     @GetMapping("/showPwdUpdate")
     public String showPasswordUpdate() {
         return "user-password-update";

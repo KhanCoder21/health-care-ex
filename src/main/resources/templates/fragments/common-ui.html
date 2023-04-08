@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="https://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="header">
     <meta charset="UTF-8">
     <title>Health Care</title>
@@ -51,17 +51,13 @@
             </li>
 
             <!--PATIENT DROPDOWN STARTS-->
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMIN')">
                 <a aria-expanded="false" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
                     Patient
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" sec:authorize="isAnonymous()" th:href="@{/patient/register}">Add
-                        Patient</a>
-                    <a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/patient/all}">View all
+                    <a class="dropdown-item" th:href="@{/patient/all}">View all
                         Patients</a>
-                    <a class="dropdown-item" sec:authorize="hasAuthority('PATIENT')" th:href="@{/patient/profile}">View
-                        My Profile</a>
                 </div>
             </li>
 
@@ -77,13 +73,15 @@
                         all Appointments</a>
                     <a class="dropdown-item" sec:authorize="hasAuthority('PATIENT')" th:href="@{/appointment/view}">Search
                         Doctor and book a slot</a>
+                    <a class="dropdown-item" sec:authorize="hasAuthority('DOCTOR')" th:href="@{/appointment/currentDoctor}">View
+                        My Appointments</a>
                 </div>
             </li>
 
             <!--Profile DROPDOWN STARTS-->
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a aria-expanded="false" class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button">
-                   <span th:text="${session.currentUserSession.displayName}"></span> <span
+                <a aria-expanded="false" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span th:text="${session.currentUserSession.displayName}"></span> <span
                         sec:authentication="principal.authorities"></span>
                 </a>
                 <div class="dropdown-menu">

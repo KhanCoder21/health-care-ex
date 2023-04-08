@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -210,6 +211,26 @@ public class AppointmentController {
             model.addAttribute("message", "Sorry, due to technical issue failed fetch requested details");
         }
         return "appointment-slots";
+    }
+
+    /**
+     * Method used to get  all appointments and display in ui
+     *
+     * @param model   model object usd send data back to ui
+     * @param message success or failure message in case of update and delete operation
+     * @return
+     */
+    @GetMapping("/currentDoctor")
+    private String displayCurrentDoctorAppointments(Model model, Principal principal, @RequestParam(value = "message", required = false) String message) {
+        try {
+            List<Object[]> doctorAppointmentList = appointmentService.fetchAppointmentsByDoctorEmail(principal.getName());
+            model.addAttribute("doctorAppointmentList", doctorAppointmentList);
+            model.addAttribute("message", message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Sorry, due to technical issue failed fetch doctor details");
+        }
+        return "appointment-doctor-data";
     }
 
 }

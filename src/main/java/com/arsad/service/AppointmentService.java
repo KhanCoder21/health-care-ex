@@ -22,4 +22,6 @@ public interface AppointmentService {
     boolean isEmailIdExistForEdit(String email, Long id);
 
     List<Object[]> fetchAppointmentsByDoctor(Long docId);
+
+    List<Object[]> fetchAppointmentsByDoctorEmail(String username);
 }

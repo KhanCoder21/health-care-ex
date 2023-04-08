@@ -1,0 +1,48 @@
+<html xmlns:th="https://thymeleaf.org">
+<div th:replace="~{fragments/common-ui :: header}"></div>
+<body>
+<div th:replace="~{fragments/common-ui :: menu}"></div>
+<div class="container">
+    <div class="card">
+        <!--Header started -->
+        <div class="card-header bg-primary text-center text-white">
+            <h3>ALL APPOINTMENT</h3>
+        </div>
+        <!--header ends -->
+        <!--body started -->
+        <div class="card-body">
+            <a class="btn btn-success" th:href="@{/doctor/excel}">Excel <i
+                    aria-hidden="true" class="fa fa-file-excel-o"></i>
+            </a>
+            <table class="table">
+                <tr class="table-hover bg-info text-white">
+                    <th>#</th>
+                    <th>DOCTOR NAME</th>
+                    <th>DATE</th>
+                    <th> NO OF SLOTS</th>
+                    <th>DETAILS</th>
+                    <th>FEE</th>
+                </tr>
+                <tr th:each="ob,i:${allAppointments}">
+                    <td>[[${i.count}]]</td>
+                    <td>[[${ob.doctor.firstName + ' '+ ob.doctor.lastName}]]</td>
+                    <td th:text="${ob.date}"></td>
+                    <td th:text="${ob.noOfSlots}"></td>
+                    <td th:text="${ob.details}"></td>
+                    <td th:text="${ob.amount}"></td>
+                    <td><a class="btn btn-danger"
+                           th:href="@{/appointment/delete(id=${ob.id})}"> <i class="fa-sharp fa-regular fa-trash-can fa-beat-fade"></i>
+                    </a> | <a class="btn btn-warning" th:href="@{/appointment/edit(id=${ob.id})}"><i
+                            class="fa-sharp fa-solid fa-user-pen fa-beat"></i>
+                    </a></td>
+                </tr>
+            </table>
+        </div>
+        <!--body ends -->
+        <div class="card-footer" th:if="${message}!=null">
+            <span th:text="${message}">message</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

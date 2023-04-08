@@ -74,4 +74,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<Object[]> fetchAppointmentsByDoctor(Long docId) {
         return repository.getAppointmentsByDoctor(docId);
     }
+
+    @Override
+    public List<Object[]> fetchAppointmentsByDoctorEmail(String username) {
+        return repository.getAppointmentsByDoctorEmail(username);
+    }
 }
