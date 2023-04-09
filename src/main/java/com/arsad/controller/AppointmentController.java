@@ -73,7 +73,7 @@ public class AppointmentController {
      * @return
      */
     @GetMapping("/all")
-    private String displayAllAppointments(Model model, @RequestParam(value = "message", required = false) String message) {
+    public String displayAllAppointments(Model model, @RequestParam(value = "message", required = false) String message) {
         try {
             List<Appointment> appointmentList = appointmentService.getAllAppointment();
             model.addAttribute("allAppointments", appointmentList);
@@ -170,7 +170,7 @@ public class AppointmentController {
      * @return
      */
     @GetMapping("/view")
-    private String viewSlots(Model model, @RequestParam(required = false, defaultValue = "0") Long specId) {
+    public String viewSlots(Model model, @RequestParam(required = false, defaultValue = "0") Long specId) {
         List<Doctor> doctorList;
         try {
             /*Fetch Data for spec Drop down*/
@@ -199,7 +199,7 @@ public class AppointmentController {
      * @return
      */
     @GetMapping("/viewSlots")
-    private String showSlots(Model model, @RequestParam Long docId) {
+    public String showSlots(Model model, @RequestParam Long docId) {
         try {
             /*Fetch appointments based on doctor id*/
             Doctor doctor = doctorService.getDoctorById(docId);
@@ -221,7 +221,7 @@ public class AppointmentController {
      * @return
      */
     @GetMapping("/currentDoctor")
-    private String displayCurrentDoctorAppointments(Model model, Principal principal, @RequestParam(value = "message", required = false) String message) {
+    public String displayCurrentDoctorAppointments(Model model, Principal principal, @RequestParam(value = "message", required = false) String message) {
         try {
             List<Object[]> doctorAppointmentList = appointmentService.fetchAppointmentsByDoctorEmail(principal.getName());
             model.addAttribute("doctorAppointmentList", doctorAppointmentList);

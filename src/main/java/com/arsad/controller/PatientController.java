@@ -71,7 +71,7 @@ public class PatientController {
      * @return all patient page
      */
     @GetMapping("/all")
-    private String displayAllPatients(Model model, @RequestParam(value = "message", required = false) String message) {
+    public String displayAllPatients(Model model, @RequestParam(value = "message", required = false) String message) {
         List<Patient> allPatients = patientService.getAllPatient();
         model.addAttribute("allPatients", allPatients);
         model.addAttribute("message", message);

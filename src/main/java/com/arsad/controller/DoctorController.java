@@ -72,7 +72,8 @@ public class DoctorController {
      * @return
      */
     @GetMapping("/all")
-    private String displayAllDoctors(Model model, @RequestParam(value = "message", required = false) String message) {
+    public
+    String displayAllDoctors(Model model, @RequestParam(value = "message", required = false) String message) {
         List<Doctor> allDoctors = doctorService.getAllDoctor();
         model.addAttribute("allDoctors", allDoctors);
         model.addAttribute("message", message);
