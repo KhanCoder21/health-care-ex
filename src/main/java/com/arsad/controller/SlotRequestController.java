@@ -4,6 +4,7 @@ import com.arsad.entity.Appointment;
 import com.arsad.entity.Patient;
 import com.arsad.entity.SlotRequest;
 import com.arsad.entity.User;
+import com.arsad.enums.SlotStatus;
 import com.arsad.service.AppointmentService;
 import com.arsad.service.PatientService;
 import com.arsad.service.SlotRequestService;
@@ -41,7 +42,7 @@ public class SlotRequestController {
         SlotRequest slotRequest = new SlotRequest();
         slotRequest.setAppointment(appointment);
         slotRequest.setPatient(patient);
-        slotRequest.setStatus("PENDING");
+        slotRequest.setStatus(SlotStatus.PENDING.name());
         try {
             Long slotId = slotRequestService.saveSlotRequest(slotRequest);
             if (slotId != null) {
@@ -80,9 +81,9 @@ public class SlotRequestController {
 
     @GetMapping("/accept")
     public String acceptRequestAndUpdateSlot(@RequestParam Long id) {
-        slotRequestService.updateSlotRequestStatus(id, "ACCEPTED");
+        slotRequestService.updateSlotRequestStatus(id, SlotStatus.ACCEPTED.name());
         SlotRequest slotRequest = slotRequestService.getSlotBySlotId(id);
-        if (slotRequest.getStatus().equalsIgnoreCase("ACCEPTED")) {
+        if (slotRequest.getStatus().equalsIgnoreCase(SlotStatus.ACCEPTED.name())) {
             appointmentService.updateSlotCountForAppointment(slotRequest.getAppointment().getId(), -1);
         }
         return "redirect:all";
@@ -90,15 +91,15 @@ public class SlotRequestController {
 
     @GetMapping("/reject")
     public String rejectRequestAndUpdateSlot(@RequestParam Long id) {
-        slotRequestService.updateSlotRequestStatus(id, "REJECTED");
+        slotRequestService.updateSlotRequestStatus(id, SlotStatus.REJECTED.name());
         return "redirect:all";
     }
 
     @GetMapping("/cancel")
     public String cancelRequestAndUpdateSlot(@RequestParam Long id) {
-        slotRequestService.updateSlotRequestStatus(id, "CANCELLED");
+        slotRequestService.updateSlotRequestStatus(id, SlotStatus.CANCELLED.name());
         SlotRequest slotRequest = slotRequestService.getSlotBySlotId(id);
-        if (slotRequest.getStatus().equalsIgnoreCase("CANCELLED")) {
+        if (slotRequest.getStatus().equalsIgnoreCase(SlotStatus.CANCELLED.name())) {
             appointmentService.updateSlotCountForAppointment(slotRequest.getAppointment().getId(), 1);
         }
         return "redirect:patient";
