@@ -25,7 +25,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="#">Admin</a>
+                <a class="nav-link" href="/user/setup">Admin</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAuthority('PATIENT')">
+                <a class="nav-link" href="/user/setup">Patient</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAuthority('DOCTOR')">
+                <a class="nav-link" href="/user/setup">Doctor</a>
             </li>
 
             <!--SPEC DROPDOWN STARTS-->
@@ -61,7 +67,21 @@
                 </div>
             </li>
 
-            <!--APPOINTMENT DROPDOWN STARTS-->
+            <!--SLOT DROPDOWN STARTS-->
+            <li class="nav-item dropdown">
+                <a aria-expanded="false" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    Slots Requests
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/slots/all}">view
+                        all slots</a>
+                    <a class="dropdown-item" sec:authorize="hasAuthority('PATIENT')" th:href="@{/slots/patient}">view
+                        my all slots</a>
+                    <a class="dropdown-item" sec:authorize="hasAuthority('DOCTOR')"
+                       th:href="@{/slots/doctor}">slots req for doctor</a>
+                </div>
+            </li>
+            <!-- USER APPOINTMENT DROPDOWN STARTS-->
             <li class="nav-item dropdown">
                 <a aria-expanded="false" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
                     Appointments
@@ -73,7 +93,8 @@
                         all Appointments</a>
                     <a class="dropdown-item" sec:authorize="hasAuthority('PATIENT')" th:href="@{/appointment/view}">Search
                         Doctor and book a slot</a>
-                    <a class="dropdown-item" sec:authorize="hasAuthority('DOCTOR')" th:href="@{/appointment/currentDoctor}">View
+                    <a class="dropdown-item" sec:authorize="hasAuthority('DOCTOR')"
+                       th:href="@{/appointment/currentDoctor}">View
                         My Appointments</a>
                 </div>
             </li>

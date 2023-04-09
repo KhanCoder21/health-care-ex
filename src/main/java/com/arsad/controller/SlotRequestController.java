@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+import java.util.List;
+
 /* Created by Arsad on 2023-04-08 23:30 */
 @Controller
 @RequestMapping("/slots")
@@ -52,5 +55,38 @@ public class SlotRequestController {
         }
         model.addAttribute("message", message);
         return "slot-request-message";
+    }
+
+    @GetMapping("/all")
+    public String viewAllSlotRequests(Model model) {
+        List<SlotRequest> allSlots = slotRequestService.getAllSlotRequests();
+        model.addAttribute("allSlots", allSlots);
+        return "slot-data";
+    }
+
+    @GetMapping("/patient")
+    public String viewPatientSlotRequests(Model model, Principal principal) {
+        List<SlotRequest> allSlots = slotRequestService.getSlotByPatientEmail(principal.getName());
+        model.addAttribute("allSlots", allSlots);
+        return "slot-data";
+    }
+
+    @GetMapping("/doctor")
+    public String viewDoctorSlotRequests(Model model, Principal principal) {
+        List<SlotRequest> allSlots = slotRequestService.getSlotByDoctorEmail(principal.getName());
+        model.addAttribute("allSlots", allSlots);
+        return "slot-data";
+    }
+
+    @GetMapping("/accept")
+    public String acceptRequestAndUpdateSlot(@RequestParam Long id) {
+        slotRequestService.updateSlotRequestStatus(id, "ACCEPTED");
+        return "redirect:all";
+    }
+
+    @GetMapping("/reject")
+    public String rejectRequestAndUpdateSlot(@RequestParam Long id) {
+        slotRequestService.updateSlotRequestStatus(id, "REJECTED");
+        return "redirect:all";
     }
 }

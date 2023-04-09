@@ -20,6 +20,10 @@ public class SlotRequestServiceImpl implements SlotRequestService {
     public List<SlotRequest> getSlotByPatientEmail(String patientName) {
         return slotRequestRepo.getSlotByPatientEmail(patientName);
     }
+    @Override
+    public List<SlotRequest> getSlotByDoctorEmail(String doctorName) {
+        return slotRequestRepo.getSlotByDoctorEmail(doctorName);
+    }
 
     @Override
     public Long saveSlotRequest(SlotRequest slotRequest) {

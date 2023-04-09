@@ -1,0 +1,51 @@
+<html xmlns:th="https://thymeleaf.org">
+<div th:replace="~{fragments/common-ui :: header}"></div>
+<body>
+<div th:replace="~{fragments/common-ui :: menu}"></div>
+<div class="container">
+    <div class="card">
+        <!--Header started -->
+        <div class="card-header bg-primary text-center text-white">
+            <h3>[All Slot Requests]</h3>
+        </div>
+        <!--header ends -->
+        <!--body started -->
+        <div class="card-body">
+            <a class="btn btn-success" th:href="@{/doctor/excel}">Excel <i
+                    aria-hidden="true" class="fa fa-file-excel-o"></i>
+            </a>
+            <table class="table">
+                <tr class="table-hover bg-info text-white">
+                    <th>#</th>
+                    <th>NAME</th>
+                    <th>DATE</th>
+                    <th>DOCTOR</th>
+                    <th>STATUS</th>
+                    <th th:if="${session.currentUserSession.userRole == 'ADMIN'}">OPERATION</th>
+                </tr>
+                <tr th:each="ob,i:${allSlots}">
+                    <td>[[${i.count}]]</td>
+                    <td>[[${ob.patient.firstName + ' '+ ob.patient.lastName}]]</td>
+                    <td th:text="${ob.appointment.date}"></td>
+                    <td>[[${ob.appointment.doctor.firstName + ' '+ ob.appointment.doctor.lastName}]]</td>
+                    <td>[[${ob.status}]]</td>
+                    <td th:if="${session.currentUserSession.userRole == 'ADMIN'}">
+                        <th:block th:if="${ob.status=='PENDING'}">
+                            <a class="btn btn-danger" th:href="@{/slots/reject(id=${ob.id})}"> Reject Request</a> |
+                            <a class="btn btn-warning" th:href="@{/slots/accept(id=${ob.id})}"> Accept Request </a>
+                        </th:block>
+                        <th:block th:if="${ob.status!='PENDING'}">
+                            <span>No operation required!</span>
+                        </th:block>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--body ends -->
+        <div class="card-footer" th:if="${message}!=null">
+            <span th:text="${message}">message</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

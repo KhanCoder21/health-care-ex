@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/appointment/register", "/appointment/save", "/appointment/all").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("/appointment/view", "/appointment/viewSlots").hasAuthority(UserRole.PATIENT.name())
                 .requestMatchers("/slots/book").hasAuthority(UserRole.PATIENT.name())
+                .requestMatchers("/slots/all","/slots/accept","/slots/reject").hasAuthority(UserRole.ADMIN.name())
                 .requestMatchers("user/login", "/login").permitAll()
 
                 .anyRequest().authenticated()
