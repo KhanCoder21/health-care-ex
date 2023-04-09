@@ -21,7 +21,7 @@
                     <th>DATE</th>
                     <th>DOCTOR</th>
                     <th>STATUS</th>
-                    <th th:if="${session.currentUserSession.userRole == 'ADMIN'}">OPERATION</th>
+                    <th th:if="${session.currentUserSession.userRole != 'DOCTOR'}">OPERATION</th>
                 </tr>
                 <tr th:each="ob,i:${allSlots}">
                     <td>[[${i.count}]]</td>
@@ -29,13 +29,26 @@
                     <td th:text="${ob.appointment.date}"></td>
                     <td>[[${ob.appointment.doctor.firstName + ' '+ ob.appointment.doctor.lastName}]]</td>
                     <td>[[${ob.status}]]</td>
-                    <td th:if="${session.currentUserSession.userRole == 'ADMIN'}">
-                        <th:block th:if="${ob.status=='PENDING'}">
+                    <td>
+                        <th:block th:if="${ob.status=='PENDING' AND session.currentUserSession.userRole == 'ADMIN'}">
                             <a class="btn btn-danger" th:href="@{/slots/reject(id=${ob.id})}"> Reject Request</a> |
                             <a class="btn btn-warning" th:href="@{/slots/accept(id=${ob.id})}"> Accept Request </a>
                         </th:block>
-                        <th:block th:if="${ob.status!='PENDING'}">
+                        <th:block th:if="${ob.status=='ACCEPTED' AND session.currentUserSession.userRole == 'PATIENT'}">
+                            <a class="btn btn-warning" th:href="@{/slots/cancel(id=${ob.id})}"
+                               th:if="${session.currentUserSession.userRole == 'PATIENT'}"> Cancel Request </a>
+                        </th:block>
+                        <th:block
+                                th:if="${ob.status != 'ACCEPTED' AND session.currentUserSession.userRole == 'PATIENT'}">
+                            <span>No operation required!!</span>
+                        </th:block>
+                        <th:block
+                                th:if="${session.currentUserSession.userRole == 'ADMIN' AND ob.status=='ACCEPTED'}">
                             <span>No operation required!</span>
+                        </th:block>
+                        <th:block
+                                th:if="${ob.status=='CANCELLED' AND session.currentUserSession.userRole == 'ADMIN'}">
+                            <span>Contact Patient for Cancellation reason!</span>
                         </th:block>
                     </td>
                 </tr>

@@ -6,6 +6,7 @@ import com.arsad.repository.AppointmentRepository;
 import com.arsad.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -78,5 +79,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Object[]> fetchAppointmentsByDoctorEmail(String username) {
         return repository.getAppointmentsByDoctorEmail(username);
+    }
+
+    @Override
+    @Transactional
+    public void updateSlotCountForAppointment(Long id, int count) {
+        repository.updateSlotCountForAppointment(id, count);
     }
 }

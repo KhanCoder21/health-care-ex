@@ -9,7 +9,10 @@ public interface SlotRequestService {
 
     /*pateint can see his slot*/
     List<SlotRequest> getSlotByPatientEmail(String patientName);
+
     List<SlotRequest> getSlotByDoctorEmail(String doctorName);
+
+    SlotRequest getSlotBySlotId(Long id);
 
     /*Patient can book slot*/
     Long saveSlotRequest(SlotRequest slotRequest);

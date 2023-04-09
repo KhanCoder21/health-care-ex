@@ -2,6 +2,7 @@ package com.arsad.service.impl;
 
 import com.arsad.entity.SlotRequest;
 import com.arsad.repository.SlotRequestRepository;
+import com.arsad.service.AppointmentService;
 import com.arsad.service.SlotRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,22 @@ public class SlotRequestServiceImpl implements SlotRequestService {
     @Autowired
     private SlotRequestRepository slotRequestRepo;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
     @Override
     public List<SlotRequest> getSlotByPatientEmail(String patientName) {
         return slotRequestRepo.getSlotByPatientEmail(patientName);
     }
+
     @Override
     public List<SlotRequest> getSlotByDoctorEmail(String doctorName) {
         return slotRequestRepo.getSlotByDoctorEmail(doctorName);
+    }
+
+    @Override
+    public SlotRequest getSlotBySlotId(Long id) {
+        return slotRequestRepo.findById(id).get();
     }
 
     @Override
